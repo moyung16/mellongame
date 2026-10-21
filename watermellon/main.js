@@ -58,17 +58,27 @@ World.add(world, [topline]);
 Render.run(render)
 Runner.run(engine)
 
+//현재 과일값을 저장할 수 있는 변수
+let currentBody = null;
+let currentFruit = null;
+
 //과일 떨어지는 함수
 function addFruits(){
-    const index = 1;
+    const index = Math.floor(Math.random() * 5);
     const fruit = FRUITS[index];
 
     const body = Bodies.circle(300, 50, fruit.radius, {
         index: index, //인덱스 값 저장
+        isSleeping: true,
         render: {
             sprite: { texture: `${fruit.name}.png`},
-        }
+        },
+        restitution: 0.2
     })
+
+    //현재 과일값을 저장
+    currentBody = body;
+    currentFruit = fruit.index;
 
     World.add(world, body)
 }
