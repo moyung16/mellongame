@@ -1,6 +1,9 @@
+import {FRUITS} from "/watermellon/fruits.js"
+
 // 모듈 불러오기
 var Engine = Matter.Engine,
     Render = Matter.Render,
+    Runner = Matter.Runner,
     Bodies = Matter.Bodies,
     World = Matter.World;
 
@@ -31,6 +34,7 @@ World.add(world, [leftwall]);
 
 const rightwall = Bodies.rectangle(605,395, 30, 790, {
     isStatic: true,
+    
     render:{fillStyle: '#E6B143'}
 })
 
@@ -45,10 +49,27 @@ World.add(world, [ground]);
 
 const topline = Bodies.rectangle(310,150, 620, 2, {
     isStatic: true,
+    isSensor: true,
     render:{fillStyle: '#E6B143'}
 })
 
 World.add(world, [topline]);
 
 Render.run(render)
-Render.run(engine)
+Runner.run(engine)
+
+//과일 떨어지는 함수
+function addFruits(){
+    const index = 1;
+    const fruit = FRUITS[index];
+
+    const body = Bodies.circle(300, 50, fruit.radius, {
+        index: index, //인덱스 값 저장
+        render: {
+            sprite: { texture: `${fruit.name}.png`},
+        }
+    })
+
+    World.add(world, body)
+}
+addFruits();
